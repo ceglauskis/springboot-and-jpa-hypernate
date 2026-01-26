@@ -2,8 +2,11 @@ package com.ceglauskis.springbootejpa.services;
 
 import com.ceglauskis.springbootejpa.entities.User;
 import com.ceglauskis.springbootejpa.repositories.UserRepository;
+import com.ceglauskis.springbootejpa.services.exceptions.DatabaseException;
 import com.ceglauskis.springbootejpa.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +32,12 @@ public class UserService {
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
+        try{
+            User user = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+            repository.delete(user);
+        }catch (DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public User update(Long id, User user){
