@@ -1,9 +1,7 @@
 package com.ceglauskis.springbootejpa.resources;
 
 import com.ceglauskis.springbootejpa.entities.Order;
-import com.ceglauskis.springbootejpa.entities.User;
 import com.ceglauskis.springbootejpa.services.OrderService;
-import com.ceglauskis.springbootejpa.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
